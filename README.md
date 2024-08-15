@@ -22,7 +22,7 @@ Two brothers coding.
 
 ## Progress:
 
-- Day 3: Python environments, git workflow
+- Day 3: Python environments, git workflow, create tic tac toe basic logic
 - Day 2: Understand overall goal (what resume should look like, why academic potential has been reached, why PBL is key, career trajectory, importance of internships)
 - Day 1: Initialize git repo
 
