@@ -22,6 +22,7 @@ Two brothers coding.
 
 ## Progress:
 
+- Day 3: Python environments, git workflow
 - Day 2: Understand overall goal (what resume should look like, why academic potential has been reached, why PBL is key, career trajectory, importance of internships)
 - Day 1: Initialize git repo
 
@@ -33,5 +34,3 @@ Two brothers coding.
 - Importing tecniques (from, *, direct import)
 - Go over vs code workflow, shortcuts
 - Go over project 1
-- Go over git workflow
-- Learn Python environments
