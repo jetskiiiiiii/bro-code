@@ -5,6 +5,12 @@ Two brothers coding.
 ## Projects:
 
 - Tic Tac Toe
+  - title at the top
+  - 9 tiles
+  - x goes first
+  - should detect win or draw
+  - display if x or o wins
+
   - Python basics
   - OOP
     - Classes
