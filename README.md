@@ -42,3 +42,4 @@ Two brothers coding.
 - Classes for game logic
 - Go over vs code workflow, shortcuts
 - Go over project 1
+- Learn vim
