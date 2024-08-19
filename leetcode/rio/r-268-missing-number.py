@@ -11,4 +11,3 @@ def missing_number(nums: List[int]) -> int:
     # while low != high:
     #     mid = (low + high) // 2
     n = len(nums)
-    for i 
