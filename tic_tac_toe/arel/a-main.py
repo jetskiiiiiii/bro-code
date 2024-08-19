@@ -3,13 +3,20 @@ from tkinter import ttk
 
 #create function to track user clicks
 def user_click():
-
+  counter = 0
+  if counter % 2 == 0:
+     tile_frame.config(text="X") #print x on grid
+     counter += 1
+  else:
+     #print o on grid
+     tile_frame.config(text="O")
+     counter += 1
 
 #create main window + frame for grid
 root = tk.Tk()
 
 #create title at top
-title = ttk.Label(root, text="Tic Tac Bro", font=("Verdana", 20, "bold"), background="black", foreground="white")
+title = ttk.Label(root, text="Tic Tac Bro", font=("Verdana", 20, "bold"), foreground="black")
 title.grid(row=0, column=0, pady=(10, 20))
 
 frame = ttk.Frame(root)
@@ -22,7 +29,7 @@ num_cols = 3
 #nest for loops to place tiles in grid
 for row in range(num_rows):
     for col in range(num_cols):
-        tile_frame = ttk.Frame(frame, width=100, height=100, relief="ridge", borderwidth=2)
+        tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
         tile_frame.grid(row=row, column=col)
 
         
