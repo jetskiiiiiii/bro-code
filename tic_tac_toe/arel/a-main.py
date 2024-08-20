@@ -5,11 +5,20 @@ from tkinter import ttk
 def user_click():
   counter = 0
   if counter % 2 == 0:
-     tile_frame.config(text="X") #print x on grid
-     counter += 1
+       if n == 1:
+         pass
+         #tile_frame1.config(text="X") #print x on grid
+       if n == 2:
+        tile_frame2.config(text="X")
+       if n == 3:
+        tile_frame3.config(text="X") 
+
+        
+       counter += 1
+  
   else:
      #print o on grid
-     tile_frame.config(text="O")
+     #tile_frame1.config(text="O")
      counter += 1
 
 #create main window + frame for grid
@@ -27,11 +36,17 @@ num_rows = 3
 num_cols = 3
 
 #nest for loops to place tiles in grid
-for row in range(num_rows):
-    for col in range(num_cols):
-        tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
-        tile_frame.grid(row=row, column=col)
+#for row in range(num_rows):
+  #  for col in range(num_cols):
 
+#tile_frame1 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click(1))
+#tile_frame1.grid(row=0, column=0)
+
+tile_frame2 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
+tile_frame2.grid(row=0, column=1)
+
+tile_frame3 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
+tile_frame3.grid(row=0, column=2)
         
 
 root.mainloop()
