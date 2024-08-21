@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 
+#function to track turns
+def turn_counter(count):
+  new_turn = count + 1
+  return new_turn
+
 #create function to track user clicks
 def user_click():
   counter = 0
@@ -39,8 +44,8 @@ num_cols = 3
 #for row in range(num_rows):
   #  for col in range(num_cols):
 
-#tile_frame1 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click(1))
-#tile_frame1.grid(row=0, column=0)
+tile_frame1 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
+tile_frame1.grid(row=0, column=0)
 
 tile_frame2 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=user_click)
 tile_frame2.grid(row=0, column=1)
