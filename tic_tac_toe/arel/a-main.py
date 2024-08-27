@@ -5,97 +5,138 @@ from tkinter import ttk
 counter = 0
 tile = 0
 
-#when any tile is clicked, display x or o depending which turn
+#when any tile is clicked, display x or o depending which turn and check for winner after each display
 def click_one():
   global counter
   if counter % 2 ==0:
     tile_frame1.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame1.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_two():
   global counter
   if counter % 2 ==0:
     tile_frame2.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame2.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_three():
   global counter
   if counter % 2 ==0:
     tile_frame3.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame3.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_four():
   global counter
   if counter % 2 ==0:
     tile_frame4.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame4.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_five():
   global counter
   if counter % 2 ==0:
     tile_frame5.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame5.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_six():
   global counter
   if counter % 2 ==0:
     tile_frame6.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame6.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_seven():
   global counter
   if counter % 2 ==0:
     tile_frame7.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame7.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_eight():
   global counter
   if counter % 2 ==0:
     tile_frame8.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame8.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def click_nine():
   global counter
   if counter % 2 ==0:
     tile_frame9.config(text="X", state="disabled")
     counter += 1
+    detect_win()
   else:
     tile_frame9.config(text="O", state="disabled")
     counter += 1
+    detect_win()
 
 def detect_win():
+  x_win = ttk.Label(root, text="PLAYER 1 WINS!") #display when x wins
+  o_win = ttk.Label(root, text="PLAYER 2 WINS!") #display when o wins
+
   #get text out of each tile
-  one = tile_frame1['text'], two = tile_frame2['text'], three = tile_frame3['text']
-  four = tile_frame4['text'], five = tile_frame5['text'], six = tile_frame6['text']
-  seven = tile_frame7['text'], eight = tile_frame8['text'], nine = tile_frame9['text']
+  one = tile_frame1['text']
+  two = tile_frame2['text']
+  three = tile_frame3['text']
+  four = tile_frame4['text']
+  five = tile_frame5['text']
+  six = tile_frame6['text']
+  seven = tile_frame7['text']
+  eight = tile_frame8['text']
+  nine = tile_frame9['text']
 
-  if one == two == three:
-    win_text = ttk.Label(root, text="WINNER!")
-
+#check for eight different win scenarios, display x wins if true
+  if one == two == three == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if one == four == seven == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if one == five == nine == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if two == five == eight == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if three == six == nine == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if three == five == seven == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if four == five == six == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
+  if seven == eight == nine == "X":
+    x_win.grid(row=2, column=0, pady=(10, 20))
 
 
 #create main window + frame for grid
@@ -105,13 +146,11 @@ root = tk.Tk()
 title = ttk.Label(root, text="Tic Tac Bro", font=("Verdana", 20, "bold"), foreground="black")
 title.grid(row=0, column=0, pady=(10, 20))
 
+#create frame for grid to be placed in row 2
 frame = ttk.Frame(root)
 frame.grid(row=1, column=0, padx=10, pady=10)
 
-#nest for loops to place tiles in grid
-#for row in range(num_rows):
-  #  for col in range(num_cols):
-
+#make each tile as a button, run user click function when clicked
 tile_frame1 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_one)
 tile_frame1.grid(row=0, column=0)
 
