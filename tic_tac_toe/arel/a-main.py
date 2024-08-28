@@ -105,9 +105,20 @@ def click_nine():
     counter += 1
     detect_win()
 
+def disable_buttons(): #function to disable buttons after win
+  tile_frame1.config(state="disabled")
+  tile_frame2.config(state="disabled")
+  tile_frame3.config(state="disabled")
+  tile_frame4.config(state="disabled")
+  tile_frame5.config(state="disabled")
+  tile_frame6.config(state="disabled")
+  tile_frame7.config(state="disabled")
+  tile_frame8.config(state="disabled")
+  tile_frame9.config(state="disabled")
+
 def detect_win():
-  x_win = ttk.Label(root, text="PLAYER 1 WINS!") #display when x wins
-  o_win = ttk.Label(root, text="PLAYER 2 WINS!") #display when o wins
+  x_win = ttk.Label(root, text="PLAYER 1 WINS!", font=("Verdana", 20)) #display when x wins
+  o_win = ttk.Label(root, text="PLAYER 2 WINS!", font=("Verdana", 20)) #display when o wins
 
   #get text out of each tile
   one = tile_frame1['text']
@@ -123,21 +134,53 @@ def detect_win():
 #check for eight different win scenarios, display x wins if true
   if one == two == three == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if one == four == seven == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if one == five == nine == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if two == five == eight == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if three == six == nine == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if three == five == seven == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if four == five == six == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
   if seven == eight == nine == "X":
     x_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
 
+  if one == two == three == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if one == four == seven == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if one == five == nine == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if two == five == eight == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if three == six == nine == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if three == five == seven == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if four == five == six == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
+  if seven == eight == nine == "O":
+    o_win.grid(row=2, column=0, pady=(10, 20))
+    disable_buttons()
 
 #create main window + frame for grid
 root = tk.Tk()
