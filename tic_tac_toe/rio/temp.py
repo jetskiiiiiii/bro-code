@@ -1,3 +1,11 @@
+a = [{1, 2, 3}, {3, 4, 5}]
+b = {"p": [1, 2, 3, 4]}
+if any(a) in b["p"]:
+    print(True)
+else:
+    print(False)
+
+###
 # from tkinter import *
 
 
@@ -18,12 +26,13 @@
 # canv.pack()
 # root.mainloop()
 
-
-a = [0, 1, 2]
-
-
-def x(a, b, c):
-    print(a, b, c)
+###
+# a = [0, 1, 2]
 
 
-x(*a)
+# def x(a, b, c):
+#     print(a, b, c)
+
+
+# x(*a)
+###
