@@ -19,18 +19,15 @@ import tkinter as tk
 
 
 def checkWin(players):
-    print(players)
     wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
     ## Checking for winning combinations
-    if any(wins) in players["player-1"]:
-        print(players["player-1"])
-        print("X")
-        return 1
-    if any(wins) in players["player-2"]:
-        print(players["player-2"])
-        print("O")
-        return 2
-    print("False")
+    ## Iterate through wins and subtracts player squares from each winning combination
+    ## If the difference results in an empty set, then player has obtained a winning combination
+    for win in wins:
+        if (win - players["player-1"]) == set():
+            return 1
+        elif (win - players["player-2"]) == set():
+            return 2
     return None
 
 
@@ -38,17 +35,16 @@ def checkWin(players):
 ## Tracks "turn" counter to fill with either green (player 1) or blue (player 2)
 def onSquareClick(idx, squares, players):
     fill = ""
-    ## If players have filled the same number of squares, turn goes to Player 1
+    ## If players have filled the same number of squares, turn goes to Player 1)
     if len(players["player-1"]) == len(players["player-2"]):
         fill = "green"
-        players["player-1"].append(idx)
+        players["player-1"].add(idx)
     else:
         fill = "blue"
-        players["player-2"].append(idx)
+        players["player-2"].add(idx)
     game_board.create_rectangle(
         *squares[idx][1:5], fill=fill
     )  ## Uses unpacking variable to get coordinates
-    checkWin(players)
     return players
 
 
@@ -57,8 +53,8 @@ def playGame(game_board):
     ## Keep track of turns and coordinates (only for use in creation of squares)
     coordinates = [0, 0, 0, 0]
     players = {
-        "player-1": [],
-        "player-2": [],
+        "player-1": set(),
+        "player-2": set(),
     }  ## Keep track of what squares each player claimed
 
     createSquares(game_board, coordinates, squares)
@@ -110,6 +106,9 @@ def changeTurn(players, squares):
                 idx, squares, players
             ),  ## Using lambda to run callback and force early binding (so idx is tracked)
         )
+
+    while checkWin(players):
+        pass
 
 
 ## Setting default settings
