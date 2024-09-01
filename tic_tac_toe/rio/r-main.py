@@ -108,6 +108,7 @@ def changeTurn(players, squares):
         )
 
     while checkWin(players):
+        print(1)
         pass
 
 
