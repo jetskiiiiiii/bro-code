@@ -1,9 +1,25 @@
-a = [{1, 2, 3}, {3, 4, 5}]
-b = {"p": [1, 2, 3, 4]}
-if any(a) in b["p"]:
-    print(True)
-else:
-    print(False)
+a = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
+b = {"p": {1, 4, 9, 7}}
+c = {2, 4, 5, 8, 1, 9}
+c = {2, 4}
+
+# for i in a:
+# print(i, c)
+# print(i - c, c - i)
+x = [True for i in a if ((i - c) == set())]
+
+print(x)
+
+# x = True if ((i - c) == set()) else False
+# print(all(a))
+
+# else:
+#     print(False)
+
+# if any(a) in b["p"]:
+#     print(1)
+# else:
+#     print(0)
 
 ###
 # from tkinter import *

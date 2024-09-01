@@ -19,41 +19,53 @@ import tkinter as tk
 
 
 def checkWin(players):
+    print(players)
     wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
     ## Checking for winning combinations
     if any(wins) in players["player-1"]:
+        print(players["player-1"])
+        print("X")
         return 1
     if any(wins) in players["player-2"]:
+        print(players["player-2"])
+        print("O")
         return 2
+    print("False")
     return None
 
 
 ## Fills square with color for when square is clicked
 ## Tracks "turn" counter to fill with either green (player 1) or blue (player 2)
-def onSquareClick(idx, squares, turn, players):
+def onSquareClick(idx, squares, players):
     fill = ""
-    if turn % 2 == 0:
+    ## If players have filled the same number of squares, turn goes to Player 1
+    if len(players["player-1"]) == len(players["player-2"]):
         fill = "green"
-        players.update({"player-1": idx})
+        players["player-1"].append(idx)
     else:
         fill = "blue"
-        players.update({"player-2": idx})
+        players["player-2"].append(idx)
     game_board.create_rectangle(
         *squares[idx][1:5], fill=fill
     )  ## Uses unpacking variable to get coordinates
-    checkWin()
-    return turn + 1, players
+    checkWin(players)
+    return players
 
 
 def playGame(game_board):
     squares = {}  ## Keep track of squares (square idx, x0, y0, x1, y1)
     ## Keep track of turns and coordinates (only for use in creation of squares)
-    turn = 0
     coordinates = [0, 0, 0, 0]
-    players = dict.fromkeys(
-        ["player-1", "player-2"]
-    )  ## Keep track of what squares each player claimed
+    players = {
+        "player-1": [],
+        "player-2": [],
+    }  ## Keep track of what squares each player claimed
 
+    createSquares(game_board, coordinates, squares)
+    changeTurn(players, squares)
+
+
+def createSquares(game_board, coordinates, squares):
     ## Loop for creating squares
     ## Set coordinates for first square
     ## Ofset by 50 for canvas alignment
@@ -81,19 +93,23 @@ def playGame(game_board):
                 *coordinates,  ## Add coordinates to dictionary
             )
 
-            ## Add bindings to each square
-            game_board.tag_bind(
-                f"square_{idx}",  ## Reference by tags
-                "<Button-1>",  ## Set sequence (mouse click is set as Button-# in documentation)
-                lambda event, idx=idx: onSquareClick(  ## This is causing problems! As the callback doesn't have a way to return values.
-                    idx, squares, turn, players
-                ),  ## Using lambda to run callback and force early binding (so idx is tracked)
-            )
             ## Spacing each square by 100
             coordinates[0] += 100
             coordinates[2] += 100
         coordinates[1] += 100
         coordinates[3] += 100
+
+
+def changeTurn(players, squares):
+    ## Add bindings to each square
+    for idx in range(9):
+        game_board.tag_bind(
+            f"square_{idx}",  ## Reference by tags
+            "<Button-1>",  ## Set sequence (mouse click is set as Button-# in documentation)
+            lambda event, idx=idx: onSquareClick(  ## This is causing problems! As the callback doesn't have a way to return values.
+                idx, squares, players
+            ),  ## Using lambda to run callback and force early binding (so idx is tracked)
+        )
 
 
 ## Setting default settings

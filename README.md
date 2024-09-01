@@ -63,11 +63,15 @@ What makes the definition variable is how you set up the problem in your code.
 
 For example, the way I initially thought about this was to have all the possible winning combinations (7 of them) stored in a list.
 
-`wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]`
+```
+wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
+```
 
  I would also track both players' squares in a dictionary.
  
- `players = dict.fromkeys(["player-1", "player-2"])`
+ ```
+ players = dict.fromkeys(["player-1", "player-2"])
+ ```
  
  After every turn, I would simply check if a winning combination existed in the dictionary. 
 
@@ -77,3 +81,22 @@ if any(wins) in players["player-1"]:
 if any(wins) in players["player-2"]:
   print("Player 2 Wins!)
 ```
+
+The problem with this code is that the `any()` function treats the list of sets as one long list (ignoring the sets altogether).
+
+It then checks if anything in that list is found in the list we're comparing it with (in this case the Players' squares list).
+
+Since all the squares are included in the winning combinations list, then the addition of any square into the Players' squares list will signal that a player has won.
+
+You can verify this by simulating a single turn (e.g. adding a square to the Player 1's square dictionary). 
+
+```
+players["player-1"].update(1)
+
+### Output: Player 1 Wins!
+```
+
+This will show that Player 1 has won the game on his first turn, which is of course, impossible.
+
+To fix this, let's rethink of what we want the `if` statement to actually compare.
+We want to say if 
