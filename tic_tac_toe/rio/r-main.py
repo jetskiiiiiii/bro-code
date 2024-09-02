@@ -31,6 +31,7 @@ def checkWin(event, players):
         {7, 8, 9},
         {2, 5, 8},
         {4, 5, 6},
+        {3, 5, 7},
     ]
 
     center_x = game_board.winfo_width() / 2
@@ -61,19 +62,31 @@ def checkWin(event, players):
     return None
 
 
+def getSquareCenter():
+    rectangle_coords = game_board.bbox("current")
+    text_x = (rectangle_coords[0] + rectangle_coords[2]) / 2
+    text_y = (rectangle_coords[1] + rectangle_coords[3]) / 2
+    return text_x, text_y
+
+
 ## Fills square with color for when square is clicked
 ## Tracks "turn" counter to fill with either green (player 1) or blue (player 2)
 def onSquareClick(event, players):
-    fill = ""
+    print(game_board.find_withtag("current"))
+    if game_board.itemcget("current", "state") == "disabled":
+        return None
+    text_x, text_y = getSquareCenter()
+    text = ""
     # If players have filled the same number of squares, turn goes to Player 1)
     frame.focus_set()
     if len(players["player-1"]) == len(players["player-2"]):
-        fill = "green"
+        text = "X"
         players["player-1"].add(*game_board.find_withtag("current"))
     else:
-        fill = "blue"
+        text = "O"
         players["player-2"].add(*game_board.find_withtag("current"))
-    game_board.itemconfig("current", fill=fill, state="disabled")
+    game_board.create_text(text_x, text_y, text=text, font=font, fill="black")
+    game_board.itemconfig("current", state="disabled")
 
     return None
 
@@ -95,31 +108,19 @@ def playGame(game_board):
 
 
 def createSquares(game_board):
-    coordinates = [0, 0, 0, 0]
     ## Loop for creating squares
-    ## Set coordinates for first square
-    ## Ofset by 50 for canvas alignment
-    coordinates[1], coordinates[3] = 50, 150
     for row in range(3):
         ## For rectangles in Tk, need two endpoints for creation
-        ## In each iteration, every endpoint is changing but rows and columns should be tracked separately (thus 2 for loops)
-        ## First for loop tracks columns (y coordinates aks coordinates[1] & coordinates[3])
-        ## Second for loop tracks rows (x coordinates aks coordinates[0] & coordinates[2])
-        coordinates[0], coordinates[2] = 50, 150
+        ## First for loop tracks columns, second for loop tracks rows
         for column in range(3):
-            ## Set idx from 0 - 9, taking into account structure of for loops
-            idx = row * 3 + column
             game_board.create_rectangle(
-                *coordinates,
+                row * 100,
+                column * 100,
+                row * 100 + 100,
+                column * 100 + 100,
                 fill="white",
-                tags=f"square_{idx}",
-            ),
-
-            ## Spacing each square by 100
-            coordinates[0] += 100
-            coordinates[2] += 100
-        coordinates[1] += 100
-        coordinates[3] += 100
+                outline="black",
+            )
 
 
 ## Setting default settings
@@ -130,21 +131,21 @@ root.title("Tic Tac Toe")
 # root.resizable()
 
 # Creating the frame for the game
-frame = tk.Frame(root, width=800, height=800)
+frame = tk.Frame(root, width=1000, height=1000)
 ## columnconfigure/rowconfigure tells Tk that the frame should expand to fill any extra space if the window is resized
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
+root.columnconfigure([1, 2, 3], weight=1)
+root.rowconfigure([1, 2, 3], weight=1)
 
 # Create canvas for the board
-game_board = tk.Canvas(width=400, height=400)
+game_board = tk.Canvas(frame, width=300, height=300)
 
 ## Title
 title = "TIC TAC TOE"
 title_label = tk.Label(frame, text=title, font=font)
 
 frame.grid()
-game_board.grid()
 title_label.grid()
+game_board.grid()
 
 playGame(game_board)
 
