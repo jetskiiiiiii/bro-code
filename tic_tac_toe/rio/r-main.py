@@ -7,6 +7,7 @@
     TO-DO:
     - squares are currently green/blue (implement X and Os)
     - OOP refactoring
+    - change from coordinates to column/row (when creating squares)
     RESOURCES:
     - https://stackoverflow.com/questions/16988750/increment-variable-in-callback-during-upload
     - https://stackoverflow.com/questions/3431676/creating-functions-or-lambdas-in-a-loop-or-comprehension
@@ -20,25 +21,43 @@ import tkinter as tk
 
 
 def checkWin(event, players):
-    print(players)
-    wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
-    ## Checking for winning combinations
-    ## Iterate through wins and subtracts player squares from each winning combination
-    ## If the difference results in an empty set, then player has obtained a winning combination
+    winner = 0
+    wins = [
+        {1, 2, 3},
+        {1, 5, 9},
+        {1, 4, 7},
+        {3, 6, 9},
+        {3, 4, 7},
+        {7, 8, 9},
+        {2, 5, 8},
+        {4, 5, 6},
+    ]
 
     center_x = game_board.winfo_width() / 2
     center_y = game_board.winfo_height() / 2
+
+    ## Checking for winning combinations
+    ## Iterate through wins and subtracts player squares from each winning combination
+    ## If the difference results in an empty set, then player has obtained a winning combination
     for win in wins:
         if (win - players["player-1"]) == set():
             game_board.itemconfig("all", state="disabled")
             game_board.create_text(
                 center_x, center_y, text="Player 1 wins!", font=font, fill="black"
             )
+            break
         elif (win - players["player-2"]) == set():
             game_board.itemconfig("all", state="disabled")
             game_board.create_text(
                 center_x, center_y, text="Player 2 wins!", font=font, fill="black"
             )
+            break
+    # If all squares have been occupied, the game is a draw
+    if (len(players["player-1"]) + len(players["player-2"]) == 9) and winner:
+        game_board.create_text(
+            center_x, center_y, text="Draw!", font=font, fill="black"
+        )
+
     return None
 
 
@@ -67,7 +86,6 @@ def playGame(game_board):
         "player-1": set(),
         "player-2": set(),
     }  ## Keep track of what squares each player claimed
-
     createSquares(game_board, coordinates, squares)
     game_board.tag_bind(
         "all", "<Button-1>", lambda event: onSquareClick(event, players)
@@ -76,7 +94,6 @@ def playGame(game_board):
     game_board.tag_bind(
         "all", "<Button-1>", lambda event: checkWin(event, players), add="+"
     )
-
     return None
 
 
@@ -115,11 +132,6 @@ def createSquares(game_board, coordinates, squares):
         coordinates[3] += 100
 
 
-def changeTurn(players, squares):
-    # x = lambda event, players=players: checkWin(players)
-    pass
-
-
 ## Setting default settings
 font = ("Verdana", 24)
 
@@ -144,10 +156,6 @@ frame.grid()
 game_board.grid()
 title_label.grid()
 
-winner = playGame(game_board)
-if winner == 1:
-    print("Player 1 Wins!")
-elif winner == 2:
-    print("Player 2 Wins!")
+playGame(game_board)
 
 root.mainloop()
