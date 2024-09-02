@@ -79,14 +79,11 @@ def onSquareClick(event, players):
 
 
 def playGame(game_board):
-    squares = {}  ## Keep track of squares (square idx, x0, y0, x1, y1)
-    ## Keep track of turns and coordinates (only for use in creation of squares)
-    coordinates = [0, 0, 0, 0]
     players = {
         "player-1": set(),
         "player-2": set(),
     }  ## Keep track of what squares each player claimed
-    createSquares(game_board, coordinates, squares)
+    createSquares(game_board)
     game_board.tag_bind(
         "all", "<Button-1>", lambda event: onSquareClick(event, players)
     )
@@ -97,33 +94,26 @@ def playGame(game_board):
     return None
 
 
-def createSquares(game_board, coordinates, squares):
+def createSquares(game_board):
+    coordinates = [0, 0, 0, 0]
     ## Loop for creating squares
     ## Set coordinates for first square
     ## Ofset by 50 for canvas alignment
     coordinates[1], coordinates[3] = 50, 150
-    for i in range(3):
+    for row in range(3):
         ## For rectangles in Tk, need two endpoints for creation
         ## In each iteration, every endpoint is changing but rows and columns should be tracked separately (thus 2 for loops)
         ## First for loop tracks columns (y coordinates aks coordinates[1] & coordinates[3])
         ## Second for loop tracks rows (x coordinates aks coordinates[0] & coordinates[2])
         coordinates[0], coordinates[2] = 50, 150
-        for j in range(3):
+        for column in range(3):
             ## Set idx from 0 - 9, taking into account structure of for loops
-            idx = i * 3 + j
-            ## Add squares to dictionary
-            squares[idx] = (
-                ## Create rectangles based on set values for coordinates
-                ## Set tag names for binding
-                game_board.create_rectangle(
-                    *coordinates,
-                    fill="white",
-                    # width=1,
-                    # outline="black",
-                    tags=f"square_{idx}",
-                ),
-                *coordinates,  ## Add coordinates to dictionary
-            )
+            idx = row * 3 + column
+            game_board.create_rectangle(
+                *coordinates,
+                fill="white",
+                tags=f"square_{idx}",
+            ),
 
             ## Spacing each square by 100
             coordinates[0] += 100

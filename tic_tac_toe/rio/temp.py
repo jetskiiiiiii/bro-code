@@ -1,7 +1,3 @@
-def b():
-    return 1
-
-
-x = lambda a: b()
-
-print(x(2))
+a = [0, 1, 3, 4]
+a[0, 1] += 1
+print(a)
