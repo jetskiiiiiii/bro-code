@@ -6,46 +6,57 @@
 
     TO-DO:
     - squares are currently green/blue (implement X and Os)
-    - win logic
     - OOP refactoring
     RESOURCES:
     - https://stackoverflow.com/questions/16988750/increment-variable-in-callback-during-upload
     - https://stackoverflow.com/questions/3431676/creating-functions-or-lambdas-in-a-loop-or-comprehension
     - https://stackoverflow.com/questions/2786877/how-to-bind-events-to-canvas-items
     - https://tkdocs.com/tutorial/firstexample.html
+    - https://web.archive.org/web/20150315060716/http://effbot.org/tkinterbook/canvas.htm
+    - https://web.archive.org/web/20150321101604/http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
   """
 
 import tkinter as tk
 
 
-def checkWin(players):
+def checkWin(event, players):
+    print(players)
     wins = [{1, 2, 3}, {1, 5, 9}, {1, 4, 7}, {3, 6, 9}, {3, 4, 7}, {7, 8, 9}, {2, 5, 8}]
     ## Checking for winning combinations
     ## Iterate through wins and subtracts player squares from each winning combination
     ## If the difference results in an empty set, then player has obtained a winning combination
+
+    center_x = game_board.winfo_width() / 2
+    center_y = game_board.winfo_height() / 2
     for win in wins:
         if (win - players["player-1"]) == set():
-            return 1
+            game_board.itemconfig("all", state="disabled")
+            game_board.create_text(
+                center_x, center_y, text="Player 1 wins!", font=font, fill="black"
+            )
         elif (win - players["player-2"]) == set():
-            return 2
+            game_board.itemconfig("all", state="disabled")
+            game_board.create_text(
+                center_x, center_y, text="Player 2 wins!", font=font, fill="black"
+            )
     return None
 
 
 ## Fills square with color for when square is clicked
 ## Tracks "turn" counter to fill with either green (player 1) or blue (player 2)
-def onSquareClick(idx, squares, players):
+def onSquareClick(event, players):
     fill = ""
-    ## If players have filled the same number of squares, turn goes to Player 1)
+    # If players have filled the same number of squares, turn goes to Player 1)
+    frame.focus_set()
     if len(players["player-1"]) == len(players["player-2"]):
         fill = "green"
-        players["player-1"].add(idx)
+        players["player-1"].add(*game_board.find_withtag("current"))
     else:
         fill = "blue"
-        players["player-2"].add(idx)
-    game_board.create_rectangle(
-        *squares[idx][1:5], fill=fill
-    )  ## Uses unpacking variable to get coordinates
-    return players
+        players["player-2"].add(*game_board.find_withtag("current"))
+    game_board.itemconfig("current", fill=fill, state="disabled")
+
+    return None
 
 
 def playGame(game_board):
@@ -58,7 +69,15 @@ def playGame(game_board):
     }  ## Keep track of what squares each player claimed
 
     createSquares(game_board, coordinates, squares)
-    changeTurn(players, squares)
+    game_board.tag_bind(
+        "all", "<Button-1>", lambda event: onSquareClick(event, players)
+    )
+
+    game_board.tag_bind(
+        "all", "<Button-1>", lambda event: checkWin(event, players), add="+"
+    )
+
+    return None
 
 
 def createSquares(game_board, coordinates, squares):
@@ -97,19 +116,8 @@ def createSquares(game_board, coordinates, squares):
 
 
 def changeTurn(players, squares):
-    ## Add bindings to each square
-    for idx in range(9):
-        game_board.tag_bind(
-            f"square_{idx}",  ## Reference by tags
-            "<Button-1>",  ## Set sequence (mouse click is set as Button-# in documentation)
-            lambda event, idx=idx: onSquareClick(  ## This is causing problems! As the callback doesn't have a way to return values.
-                idx, squares, players
-            ),  ## Using lambda to run callback and force early binding (so idx is tracked)
-        )
-
-    while checkWin(players):
-        print(1)
-        pass
+    # x = lambda event, players=players: checkWin(players)
+    pass
 
 
 ## Setting default settings
