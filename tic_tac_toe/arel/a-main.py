@@ -5,105 +5,6 @@ from tkinter import ttk
 counter = 0
 tile = 0
 
-#when any tile is clicked, display x or o depending which turn and check for winner after each display
-def click_one(s):
-  global counter
-  if counter % 2 ==0:
-    #tile_frame1.config(text="X", state="disabled")
-    counter += 1
-    #detect_win()
-  else:
-    #tile_frame1.config(text="O", state="disabled")
-    counter += 1
-    #detect_win()
-
-def click_two():
-  global counter
-  if counter % 2 ==0:
-    tile_frame2.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame2.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_three():
-  global counter
-  if counter % 2 ==0:
-    tile_frame3.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame3.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_four():
-  global counter
-  if counter % 2 ==0:
-    tile_frame4.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame4.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_five():
-  global counter
-  if counter % 2 ==0:
-    tile_frame5.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame5.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_six():
-  global counter
-  if counter % 2 ==0:
-    tile_frame6.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame6.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_seven():
-  global counter
-  if counter % 2 ==0:
-    tile_frame7.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame7.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_eight():
-  global counter
-  if counter % 2 ==0:
-    tile_frame8.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame8.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
-
-def click_nine():
-  global counter
-  if counter % 2 ==0:
-    tile_frame9.config(text="X", state="disabled")
-    counter += 1
-    detect_win()
-  else:
-    tile_frame9.config(text="O", state="disabled")
-    counter += 1
-    detect_win()
 
 def disable_buttons(): #function to disable buttons after win
   tile_frame1.config(state="disabled")
@@ -206,38 +107,12 @@ button = 0
 
 for row in range(3):
   for column in range(3):
-    tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=lambda button=button:click(button))
+    tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=lambda button=button:click(button)) #Need to prevent double clicking
     tile_frame.grid(row=row, column=column)
     button += 1
     button_tracker.append(tile_frame)
     
 print(button_tracker)
-"""tile_frame1 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_one)
-tile_frame1.grid(row=0, column=0)
-
-tile_frame2 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_two)
-tile_frame2.grid(row=0, column=1)
-
-tile_frame3 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_three)
-tile_frame3.grid(row=0, column=2)
-        
-tile_frame4 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_four)
-tile_frame4.grid(row=1, column=0)
-
-tile_frame5 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_five)
-tile_frame5.grid(row=1, column=1)
-
-tile_frame6 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_six)
-tile_frame6.grid(row=1, column=2)
-
-tile_frame7 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_seven)
-tile_frame7.grid(row=2, column=0)
-
-tile_frame8 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_eight)
-tile_frame8.grid(row=2, column=1)
-
-tile_frame9 = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=click_nine)
-tile_frame9.grid(row=2, column=2)"""
 
 root.mainloop()
 
