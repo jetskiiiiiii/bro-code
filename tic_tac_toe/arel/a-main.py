@@ -1,12 +1,16 @@
 import tkinter as tk
 from tkinter import ttk
 
+"""
+- https://web.archive.org/web/20150315060716/http://effbot.org/tkinterbook/canvas.htm
+- https://web.archive.org/web/20150321101604/http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
+"""
 #global tracking variables
 counter = 0
 tile = 0
 
 
-def disable_buttons(): #function to disable buttons after win
+"""def disable_buttons(): #function to disable buttons after win
   tile_frame1.config(state="disabled")
   tile_frame2.config(state="disabled")
   tile_frame3.config(state="disabled")
@@ -15,7 +19,7 @@ def disable_buttons(): #function to disable buttons after win
   tile_frame6.config(state="disabled")
   tile_frame7.config(state="disabled")
   tile_frame8.config(state="disabled")
-  tile_frame9.config(state="disabled")
+  tile_frame9.config(state="disabled")"""
 
 def detect_win():
   x_win = ttk.Label(root, text="PLAYER 1 WINS!", font=("Verdana", 20)) #display when x wins
@@ -94,28 +98,43 @@ title.grid(row=0, column=0, pady=(10, 20))
 frame = ttk.Frame(root)
 frame.grid(row=1, column=0, padx=10, pady=10)
 
-def click(button):
-  if button % 2 == 1:
-    print("X")
+
+def click(button, button_tracker, turn_count):
+  if turn_count % 2 == 1:
+    #print("X")
+    button_tracker[button].config(text="X", state="disabled")
   else:
-    print("O")
+    #print("O")
+    button_tracker[button].config(text="O", state="disabled")
 
 
-#make each tile as a button, run user click function when clicked
-button_tracker = []
-button = 0
+def createSquare(button_tracker, row, column):
+  tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2)
+  tile_frame.grid(row=row, column=column)
+  button_tracker.append(tile_frame)
+  return button_tracker
 
-for row in range(3):
-  for column in range(3):
-    tile_frame = tk.Button(frame, width=20, height=10, relief="ridge", borderwidth=2, command=lambda button=button:click(button)) #Need to prevent double clicking
-    tile_frame.grid(row=row, column=column)
-    button += 1
-    button_tracker.append(tile_frame)
+
+def playGame():
+  button_tracker = []
+  button = 0
+  turn_count = 0
+
+  for row in range(3):
+    for column in range(3):
+      button_tracker = createSquare(button_tracker, row, column)
+
+  while turn_count < 9:
+    click(button, button_tracker, turn_count)
+    turn_count += 1
+
+
+
     
-print(button_tracker)
+#print(button_tracker)
 
+playGame()
 root.mainloop()
-
 
 """title at the top, done
   - 9 tiles, done
