@@ -24,7 +24,8 @@ tile = 0
 def detect_win():
   x_win = ttk.Label(root, text="PLAYER 1 WINS!", font=("Verdana", 20)) #display when x wins
   o_win = ttk.Label(root, text="PLAYER 2 WINS!", font=("Verdana", 20)) #display when o wins
-
+  
+"""
   #get text out of each tile
   one = tile_frame1['text']
   two = tile_frame2['text']
@@ -35,6 +36,7 @@ def detect_win():
   seven = tile_frame7['text']
   eight = tile_frame8['text']
   nine = tile_frame9['text']
+
 
 #check for eight different win scenarios, display x wins if true
   if one == two == three == "X":
@@ -86,7 +88,8 @@ def detect_win():
   if seven == eight == nine == "O":
     o_win.grid(row=2, column=0, pady=(10, 20))
     disable_buttons()
-
+"""
+    
 #create main window + frame for grid
 root = tk.Tk()
 
@@ -136,8 +139,8 @@ def playGame():
 playGame()
 root.mainloop()
 
-"""title at the top, done
-  - 9 tiles, done
-  - x goes first, done
+"""title at the top
+  - 9 tiles
+  - x goes first
   - should detect win or draw
   - display if x or o wins"""
