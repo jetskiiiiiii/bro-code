@@ -37,5 +37,6 @@ All the numbers of nums are unique.
 Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
 """
 
+
 def missingNumber(nums: List[int]) -> int:
-    
+    pass
